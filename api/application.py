@@ -167,6 +167,30 @@ def retrieve_all_transactions_details(skip: int = 0, limit: int = 100, db: Sessi
     transaction = CrudTransaction.get_transactions(db=db, skip=skip, limit=limit)
     return transaction
 
+@app.get('/fetch-transactions-filter-finish-date', response_model=List[SchemaTransaction.Transaction])
+def get_transaction_by_finish_date(finish: bool ,date: str, db: Session = Depends(get_db)):
+    details = CrudTransaction.get_transaction_by_finish_date(db=db, date=date, finish=finish)
+    if not details:
+        raise HTTPException(status_code=404, detail=f"No record found to show")
+
+    try:
+        showfilter = CrudTransaction.get_transaction_by_finish_date(db=db, date=date, finish=finish)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Unable to get Transaction: {e}")
+    return showfilter
+
+@app.get('/fetch-transactions-filter-machine', response_model=List[SchemaTransaction.Transaction])
+def get_transaction_filter_machine(finish: bool, packet: bool, number: int, db: Session = Depends(get_db)):
+    details = CrudTransaction.get_transaction_filter_three_parameter(db=db, packet=packet, finish=finish, number=number)
+    if not details:
+        raise HTTPException(status_code=404, detail=f"No record found to show")
+
+    try:
+        showfilter = CrudTransaction.get_transaction_filter_three_parameter(db=db, packet=packet, finish=finish, number=number)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Unable to get Transaction: {e}")
+    return showfilter
+
 @app.get('/fetch-transactions-filter-date', response_model=List[SchemaTransaction.Transaction])
 def get_transaction_by_date(date: str, db: Session = Depends(get_db)):
     details = CrudTransaction.get_transactions_by_date(db=db, date=date)
