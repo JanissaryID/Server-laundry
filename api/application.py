@@ -179,6 +179,18 @@ def get_transaction_by_finish_date(finish: bool ,date: str, db: Session = Depend
         raise HTTPException(status_code=400, detail=f"Unable to get Transaction: {e}")
     return showfilter
 
+@app.get('/fetch-transactions-filter-finish', response_model=List[SchemaTransaction.Transaction])
+def get_transaction_by_finish(finish: bool, db: Session = Depends(get_db)):
+    details = CrudTransaction.get_transaction_by_finish(db=db, finish=finish)
+    if not details:
+        raise HTTPException(status_code=404, detail=f"No record found to show")
+
+    try:
+        showfilter = CrudTransaction.get_transaction_by_finish(db=db, finish=finish)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Unable to get Transaction: {e}")
+    return showfilter
+
 @app.get('/fetch-transactions-filter-machine', response_model=List[SchemaTransaction.Transaction])
 def get_transaction_filter_machine(finish: bool, packet: bool, number: int, db: Session = Depends(get_db)):
     details = CrudTransaction.get_transaction_filter_three_parameter(db=db, packet=packet, finish=finish, number=number)
@@ -219,13 +231,13 @@ def delete_transaction_by_id(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail=f"Unable to delete: {e}")
     return {"delete status": "success"}
 
-@app.put('/update-transaction', response_model=SchemaTransaction.Transaction)
-def update_transaction_details(id: int, update_param: SchemaTransaction.TransactionUpdate, db: Session = Depends(get_db)):
+@app.put('/update-transaction', response_model=SchemaTransaction.UpdateStepOneTransaction)
+def update_transaction_details(id: int, update_param: SchemaTransaction.UpdateStepOneTransaction, db: Session = Depends(get_db)):
     details = CrudTransaction.get_transaction_by_id(db=db, sl_id=id)
     if not details:
         raise HTTPException(status_code=404, detail=f"No record found to update")
 
-    return CrudTransaction.update_transaction_details(db=db, details=update_param, sl_id=id)
+    return CrudTransaction.update_stepOne_transaction_details(db=db, details=update_param, sl_id=id)
 
 @app.put('/update-status-transaction', response_model=SchemaTransaction.Transaction)
 def update_status_transaction_details(id: int, update_param: SchemaTransaction.UpdateStatusTransaction, db: Session = Depends(get_db)):

@@ -12,6 +12,7 @@ class TransactionBase(BaseModel):
     transaction_finish:         bool
     is_packet:                  bool
     step_one:                   bool
+    # step_two:                   bool
     transaction_store:          int
 
 class TransactionAdd(TransactionBase):
@@ -37,6 +38,7 @@ class TransactionUpdate(BaseModel):
     transaction_finish:         bool
     is_packet:                  bool
     step_one:                   bool
+    # step_two:                   bool
     transaction_store:          int
 
     class Config:
@@ -44,6 +46,13 @@ class TransactionUpdate(BaseModel):
 
 class UpdateStatusTransaction(BaseModel):
     transaction_finish:         bool
+
+    class Config:
+        orm_mode = True
+
+class UpdateStepOneTransaction(BaseModel):
+    step_one:                   bool
+    transaction_number_machine: int
 
     class Config:
         orm_mode = True

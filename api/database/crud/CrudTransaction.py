@@ -6,6 +6,10 @@ def get_transaction_by_finish_date(db: Session, finish: bool, date: str):
     transaction = db.query(model.ModelTransaction).filter(model.ModelTransaction.transaction_finish == finish,model.ModelTransaction.transaction_date == date).all()
     return transaction
 
+def get_transaction_by_finish(db: Session, finish: bool):
+    transaction = db.query(model.ModelTransaction).filter(model.ModelTransaction.transaction_finish == finish).all()
+    return transaction
+
 def get_transactions_by_transactions_date(db: Session, transacrions_date: str):
     return db.query(model.ModelTransaction).filter(model.ModelTransaction.transaction_date == transacrions_date).first()
 
@@ -47,6 +51,11 @@ def update_transaction_details(db: Session, sl_id: int, details: schema.Transact
     return db.query(model.ModelTransaction).filter(model.ModelTransaction.id == sl_id).first()
 
 def update_status_transaction_details(db: Session, sl_id: int, details: schema.UpdateStatusTransaction):
+    db.query(model.ModelTransaction).filter(model.ModelTransaction.id == sl_id).update(vars(details))
+    db.commit()
+    return db.query(model.ModelTransaction).filter(model.ModelTransaction.id == sl_id).first()
+
+def update_stepOne_transaction_details(db: Session, sl_id: int, details: schema.UpdateStepOneTransaction):
     db.query(model.ModelTransaction).filter(model.ModelTransaction.id == sl_id).update(vars(details))
     db.commit()
     return db.query(model.ModelTransaction).filter(model.ModelTransaction.id == sl_id).first()
