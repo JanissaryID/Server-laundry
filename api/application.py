@@ -96,6 +96,18 @@ def update_machine_details(id: int, update_param: SchemaMachine.UpdateMachine, d
 
     return CrudMachine.update_machine_details(db=db, details=update_param, sl_id=id)
 
+@app.get('/machine-id')
+def get_machine_by_id(sl_id: int, db: Session = Depends(get_db)):
+    details = CrudMachine.get_machine_by_id(db=db, sl_id=sl_id)
+    if not details:
+        raise HTTPException(status_code=404, detail=f"No record found to show")
+
+    try:
+        CrudMachine.get_machine_by_id(db=db, sl_id=sl_id)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Unable to get Machine: {e}")
+    return CrudMachine.get_machine_by_id(db=db, sl_id=sl_id)
+
 
 ################################    STORE    ################################
 
