@@ -203,7 +203,7 @@ def get_transaction_by_finish(finish: bool, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail=f"Unable to get Transaction: {e}")
     return showfilter
 
-@app.get('/fetch-transactions-filter-machine', response_model=List[SchemaTransaction.Transaction])
+@app.get('/fetch-transactions-filter-machine')
 def get_transaction_filter_machine(finish: bool, packet: bool, number: int, db: Session = Depends(get_db)):
     details = CrudTransaction.get_transaction_filter_three_parameter(db=db, packet=packet, finish=finish, number=number)
     if not details:

@@ -14,7 +14,7 @@ def get_transactions_by_transactions_date(db: Session, transacrions_date: str):
     return db.query(model.ModelTransaction).filter(model.ModelTransaction.transaction_date == transacrions_date).first()
 
 def get_transaction_filter_three_parameter(db: Session, finish: bool, packet: bool, number: int):
-    transaction = db.query(model.ModelTransaction).filter(model.ModelTransaction.transaction_finish == finish, model.ModelTransaction.is_packet == packet, model.ModelTransaction.transaction_number_machine == number).all()
+    transaction = db.query(model.ModelTransaction).filter(model.ModelTransaction.transaction_finish == finish, model.ModelTransaction.is_packet == packet, model.ModelTransaction.transaction_number_machine == number).first()
     return transaction
 
 def get_transactions_by_date(db: Session, date: str):
