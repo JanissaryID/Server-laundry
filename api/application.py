@@ -204,13 +204,13 @@ def get_transaction_by_finish(finish: bool, db: Session = Depends(get_db)):
     return showfilter
 
 @app.get('/fetch-transactions-filter-machine')
-def get_transaction_filter_machine(finish: bool, packet: bool, number: int, db: Session = Depends(get_db)):
-    details = CrudTransaction.get_transaction_filter_three_parameter(db=db, packet=packet, finish=finish, number=number)
+def get_transaction_filter_machine(finish: bool, packet: bool, number: int, store: int, db: Session = Depends(get_db)):
+    details = CrudTransaction.get_transaction_filter_three_parameter(db=db, packet=packet, finish=finish, number=number, store=store)
     if not details:
         raise HTTPException(status_code=404, detail=f"No record found to show")
 
     try:
-        showfilter = CrudTransaction.get_transaction_filter_three_parameter(db=db, packet=packet, finish=finish, number=number)
+        showfilter = CrudTransaction.get_transaction_filter_three_parameter(db=db, packet=packet, finish=finish, number=number, store=store)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Unable to get Transaction: {e}")
     return showfilter
