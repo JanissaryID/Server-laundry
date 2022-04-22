@@ -9,6 +9,7 @@ class ModelTransaction(Base):
     transaction_type_menu = Column(String, nullable=False, default="null")
     transaction_type_payment = Column(String, nullable=False, default="null")
     transaction_class_machine = Column(String, nullable=False, default="null")
+    transaction_id_machine = Column(Integer, index=True, nullable=False)
     transaction_number_machine = Column(Integer, index=True, nullable=False)
     transaction_date = Column(String, nullable=False, default="1-1-2000")
     transaction_price = Column(String, nullable=False, default="null")

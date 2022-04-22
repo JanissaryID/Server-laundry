@@ -9,4 +9,5 @@ class ModelMachine(Base):
     machine_number = Column(Integer, index=True, nullable=False)
     machine_status = Column(Boolean, nullable=False, default=False)
     machine_class = Column(Boolean, nullable=False, default=False)
+    is_packet = Column(Boolean, nullable=False, default=False)
     machine_store = Column(Integer, index=True, nullable=False)

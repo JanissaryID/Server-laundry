@@ -2,9 +2,6 @@ from sqlalchemy.orm import Session
 import database.model.ModelMachine as model
 import database.schema.SchemaMachine as schema
 
-# def get_transactions_by_date(db: Session, date: str):
-#     return db.query(model.ModelTransaction).filter(model.ModelTransaction.transaction_date == date).all()
-
 def get_machine_by_class_type(db: Session, clases: bool, type: bool):
     machine_type = db.query(model.ModelMachine).filter(model.ModelMachine.machine_type == type,model.ModelMachine.machine_class == clases).all()
     return machine_type
@@ -24,6 +21,7 @@ def add_machine_details_to_db(db: Session, machine: schema.MachineAdd):
         machine_number=machine.machine_number,
         machine_status=machine.machine_status,
         machine_class=machine.machine_class,
+        is_packet=machine.is_packet,
         machine_store=machine.machine_store
     )
     db.add(machine_details)

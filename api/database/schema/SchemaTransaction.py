@@ -1,8 +1,7 @@
-import string
-from typing import Optional
 from pydantic import BaseModel
 
 class TransactionBase(BaseModel):
+    transaction_number_machine: int
     transaction_type_menu:      str
     transaction_menu_machine:   str
     transaction_type_payment:   str
@@ -12,11 +11,10 @@ class TransactionBase(BaseModel):
     transaction_finish:         bool
     is_packet:                  bool
     step_one:                   bool
-    # step_two:                   bool
     transaction_store:          int
 
 class TransactionAdd(TransactionBase):
-    transaction_number_machine: int
+    transaction_id_machine:     int
 
     class Config:
         orm_mode = True
@@ -28,6 +26,7 @@ class Transaction(TransactionAdd):
         orm_mode = True
 
 class TransactionUpdate(BaseModel):
+    transaction_id_machine:     int
     transaction_number_machine: int
     transaction_type_menu:      str
     transaction_menu_machine:   str
@@ -38,7 +37,6 @@ class TransactionUpdate(BaseModel):
     transaction_finish:         bool
     is_packet:                  bool
     step_one:                   bool
-    # step_two:                   bool
     transaction_store:          int
 
     class Config:
@@ -53,6 +51,7 @@ class UpdateStatusTransaction(BaseModel):
 class UpdateStepOneTransaction(BaseModel):
     step_one:                   bool
     transaction_number_machine: int
+    transaction_id_machine:     int
 
     class Config:
         orm_mode = True

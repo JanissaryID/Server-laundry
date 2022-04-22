@@ -33,6 +33,7 @@ def add_transaction_details_to_db(db: Session, transaction: schema.TransactionAd
         transaction_type_payment = transaction.transaction_type_payment,
         transaction_class_machine = transaction.transaction_class_machine,
         transaction_number_machine = transaction.transaction_number_machine,
+        transaction_id_machine = transaction.transaction_id_machine,
         transaction_date = transaction.transaction_date,
         transaction_price = transaction.transaction_price,
         transaction_finish = transaction.transaction_finish,
